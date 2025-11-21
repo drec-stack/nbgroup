@@ -77,4 +77,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Export for global access
+
 window.initHome = initHome;
+
+// Scroll animations
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    });
+    
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Initialize when DOM loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initScrollAnimations();
+    animateCounter(); // Запуск счетчиков при загрузке
+});
