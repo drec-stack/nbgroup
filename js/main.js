@@ -275,4 +275,57 @@ window.initHeader = function() {
         window.NBApp.setupCurrentPage();
         window.NBApp.setupLanguageSupport();
     }
+
 };
+
+// Magnetic buttons
+document.querySelectorAll('[data-magnetic]').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const angleX = (y - centerY) / centerY * 10;
+        const angleY = (centerX - x) / centerX * 10;
+        
+        btn.style.setProperty('--tx', `${angleY}px`);
+        btn.style.setProperty('--ty', `${angleX}px`);
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        btn.style.setProperty('--tx', '0px');
+        btn.style.setProperty('--ty', '0px');
+    });
+});
+
+// Animated counter
+function animateCounter() {
+    const counters = document.querySelectorAll('.stat-item');
+    
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-count');
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                counter.textContent = target + '+';
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current) + '+';
+            }
+        }, 16);
+    });
+}
+
+// Custom cursor
+const cursor = document.querySelector('.cursor-follower');
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
