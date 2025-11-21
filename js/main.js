@@ -247,3 +247,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Export functions for use in other files
 window.animateCounter = animateCounter;
+
+// Add this to your existing main.js
+
+// Process section animations
+function initProcessAnimations() {
+    const processItems = document.querySelectorAll('.process-item');
+    
+    processItems.forEach((item, index) => {
+        // Add delay for staggered animation
+        item.style.transitionDelay = `${index * 0.1}s`;
+    });
+}
+
+// Update your DOMContentLoaded event
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing code ...
+    
+    initProcessAnimations();
+});
